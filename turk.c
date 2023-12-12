@@ -54,6 +54,7 @@ static void targeting(t_node **from, t_node **to)
         mover -> target_rot = target -> rot;
         mover -> target_rev = target -> rev;
         mover -> price = pricing(mover);
+        printStack(*from, 'f');
         //mover -> price = minor((minor(major(mover -> rot, mover -> target_rot), major(mover -> rot, mover -> target_rot)), minor(mover -> rot + mover -> target_rev, mover -> rev + mover -> target_rot));
         mover = mover -> next;
     }
@@ -76,20 +77,6 @@ static void analyze_stack(t_node **from, t_node **to)
    // printStack(*from, 'a');
 }    
 
-static void populate_b(t_node **a, t_node **b)
-{
-    pb(a, b, 2);
-    
-    while (*a)
-    {
-        analyze_stack(a, b);
-        targeting(a, b);
-        migrate_b(a, b);
-        pb(a, b, 1);
-    }
-    //analyze_stack(a, b);
-}
-
 static t_node *find_cheaper(t_node **a)
 {
     t_node  *finder;
@@ -108,7 +95,7 @@ static t_node *find_cheaper(t_node **a)
         }
         finder = finder -> next;
     }
-
+    return (cheaper);
 }
 
 static void migrate_b(t_node **a, t_node **b)
@@ -118,6 +105,7 @@ static void migrate_b(t_node **a, t_node **b)
     cheaper = find_cheaper(a);
     if (cheaper -> price == cheaper -> rot + cheaper -> target_rev)
     {
+        printf("xxxx\n");
         ra(a, cheaper -> rot);
         rrb(b, cheaper -> target_rev);
     }
@@ -138,10 +126,53 @@ static void migrate_b(t_node **a, t_node **b)
         ra(a, cheaper -> rev - cheaper -> rev);
         rb(a, cheaper -> target_rev - cheaper -> rev);
     }
+    pb(a, b, 1);
+    printStack(*a, 'a');
+    printStack(*b, 'b');
+}
 
+static void populate_b(t_node **a, t_node **b)
+{
+    pb(a, b, 2);
+    
+    while (*a)
+    {
+        analyze_stack(a, b);
+        targeting(a, b);
+        migrate_b(a, b);
+        
+    }
+    //analyze_stack(a, b);
+}
+
+static void rev_sort(t_node **b)
+{
+    int pos;
+    int len;
+
+    len = stacklen(b);
+    pos = getpos(b, getmax(b));
+    printf("max value of b is in pos %d of %d elements", pos, len);
+    if (pos < (len / 2))
+        rb(b, pos);
+    else
+        rrb(b, (len - pos));
+    printStack(*b, '!');
+}
+
+void back2a(t_node **a, t_node **b)
+{
+    int len;
+    
+    len = stacklen(b);
+    pa(a, b, len);
 }
 
 void    turk_sort(t_node** a, t_node **b)
 {
     populate_b(a, b);
+    rev_sort(b);
+    back2a(a, b);
+    printStack(*a, 'a');
+    printStack(*b, 'b');
 }

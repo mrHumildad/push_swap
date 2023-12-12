@@ -28,9 +28,10 @@ static void	rotate(t_node **stack)
 
 void	ra(t_node **a, int times)
 {
-	while (times--)
+	while (times > 0)
 	{
-		ft_putstr("ra\n");
+		printf("raaaaa\n");
+		printf("ra times : %d\n ", times);
 		rotate(a);
 	}
 

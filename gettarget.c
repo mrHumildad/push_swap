@@ -50,14 +50,14 @@ int getpos(t_node **a, long int n)
 	int 	pos;
 	t_node	*finder;
 
-	pos = 1;
+	pos = 0;
 	finder = *a;
 	while (finder -> value != n)
 	{
 		finder = finder ->next;
 		pos++;
 	}
-	return (n);
+	return (pos);
 }
 
 t_node *getnode(t_node **a, long int n)
