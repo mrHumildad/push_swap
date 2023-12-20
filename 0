@@ -1,0 +1,16 @@
+../push_swap "3" "1" "" > /dev/null 2> err_check.txt
+../push_swap > /dev/null 2> err_check.txt
+../push_swap "4" "6" "     " > /dev/null 2> err_check.txt
+../push_swap "3a3" "2345" "324j455" "78" > /dev/null 2> err_check.txt
+../push_swap "92" > err_check.txt
+../push_swap "92" "42" "67" "87" "92" "727" > /dev/null 2> err_check.txt
+../push_swap "92" "42" "67" "87" "00092" "727" > /dev/null 2> err_check.txt
+XXXXX../push_swap "92" "42" "67" "87" "+92" "727" > /dev/null 2> err_check.txt
+../push_swap "92" "42" "+67" "87" "-727" > /dev/null 2> err_check.txt
+../push_swap "92" "42" "+67" "--727" > /dev/null 2> err_check.txt
+../push_swap "21474836499" "54546" "3877" > /dev/null 2> err_check.txt
+../push_swap "429496729433" "54546" "3877" > /dev/null 2> err_check.txt
+../push_swap "-21474836499" "456" "6476" > /dev/null 2> err_check.txt
+../push_swap "1" "4" "66" "88" > err_check.txt
+../push_swap "1" "4" > err_check.txt
+../push_swap "1" "4" "7" "8" "10" "100" "10000" > err_check.txt
