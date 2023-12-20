@@ -12,24 +12,6 @@
 
 #include "push_swap.h"
 
-/*int containssint(t_node **a)
-{
-    t_node *checker;
-
-    checker = *a;
-    while (checker)
-    {
-        if ((checker -> value) > 2147483647 || (checker -> value) < -2147483648)
-        {
-            printf("%li is not int!", checker -> value);
-            return (0);
-        checker = checker -> next;
-        }
-    }
-    printf("all values in stack are int");
-    return (1);
-}*/
-
 int isrepeated(t_node **a)
 {
     t_node *home;
@@ -42,12 +24,7 @@ int isrepeated(t_node **a)
         while (target)
         {
                 if (home -> value == target -> value)
-                {
-                    printf("%d is = to %d\n", (int)home ->value, (int)target -> value);
-;                   return (1);
-                }
-                //else
-                 //   printf("%d is != to %d\n", (int)home ->value, (int)target -> value);
+                   return (1);
                 target = target -> next;
         }
         home = home -> next;
@@ -57,7 +34,9 @@ int isrepeated(t_node **a)
 
 int checkstack(t_node **a)
 {
-	if (!*a || issorted(*a) || isrepeated(a)/* || containssint(a)*/)
+	if (!*a || isrepeated(a))
+        return (-1);
+    if (issorted(*a))
         return (0);
     return (1);
 }

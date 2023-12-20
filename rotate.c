@@ -28,14 +28,13 @@ static void	rotate(t_node **stack)
 
 void	ra(t_node **a, int times)
 {
-	while (times > 0)
+	while (times--)
 	{
-		printf("raaaaa\n");
-		printf("ra times : %d\n ", times);
+		ft_putstr("ra\n");
 		rotate(a);
 	}
-
 }
+
 void	rb(t_node **b, int times)
 {
 	while (times--)

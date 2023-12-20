@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "push_swap.h"
 
-static int	wc(const char *s, char x)
+int	wc(const char *s, char x)
 {
 	int	words;
 	int	isword;
@@ -53,7 +53,7 @@ static int	wlen(const char *s, char c)
 	return (len);
 }
 
-static void	freeall(char **res)
+void	freeall(char **res)
 {
 	int	wi;
 
@@ -96,14 +96,12 @@ static char	**justfornormi(char const *s, char c, char **res)
 char	**ft_split(char const *s, char c)
 {
 	char	**res;
-	int		wi;
 
 	if (!s)
 		return (NULL);
 	res = (char **)ft_calloc(sizeof(char *), wc(s, c) + 1);
 	if (!res)
 		return (NULL);
-	wi = 0;
 	res = justfornormi(s, c, res);
 	return (res);
 }

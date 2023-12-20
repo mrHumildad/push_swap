@@ -19,10 +19,11 @@
 # include <stdbool.h>
 # include <unistd.h>
 # include <limits.h>
+#include <stddef.h>
 
 typedef struct s_node
 {
-        long             value;
+        long            value;
         char            *pos;
         int             top;
         int             rot;
@@ -74,5 +75,17 @@ int     closestbig(t_node **b, int n);
 t_node *getnode(t_node **a, long int n);
 int minor (int a, int b);
 int major (int a, int b);
+unsigned int	ft_strlcpy(char *dest, char *src, unsigned int size);
+void	*ft_calloc(size_t nitems, size_t size);
+int	wc(const char *s, char x);
+char	**ft_split(char const *s, char c);
+void	freeall(char **res);
+int ft_strcmp(char *a, char *b);
+
+
+
+
+
+
 
 #endif
