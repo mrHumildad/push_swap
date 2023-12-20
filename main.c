@@ -43,13 +43,42 @@ void printStack(t_node *stack, char s)
 		printf("stack %c is sorted!!\n", s);
 	while (stack->next)
 	{
-		printf("node %d[%c] : %li	rot : %d	rev : %d	t_rot ; %d	t_rev :%d\n", i, s, stack->value, stack->rot, stack->rev, stack->target_rot, stack->target_rev);
+		printf("node %d[%c] : %li	rot : %d	rev : %d	t_rot ; %d	t_rev :%d	price : %d\n", i, s, stack->value, stack->rot, stack->rev, stack->target_rot, stack->target_rev, stack -> price);
 		i++;
 		stack = stack->next;
 	}
 	//printf("node %d[%c] : %li\n\n", i, s, stack->value);
-	printf("node %d[%c] : %li	rot : %d	rev : %d	t_rot ; %d	t_rev :%d\n", i, s, stack->value, stack->rot, stack->rev, stack->target_rot, stack->target_rev);
+		printf("node %d[%c] : %li	rot : %d	rev : %d	t_rot ; %d	t_rev :%d	price : %d\n", i, s, stack->value, stack->rot, stack->rev, stack->target_rot, stack->target_rev, stack -> price);
 
+}
+
+int isnumber(char **str)
+{
+	int i;
+	int s;
+
+	s = 0;
+//	printf("%s is number?", *str);
+	while (str[s])
+	{
+		if ((ft_strcmp(str[s], "" ) == 0) || str[s][0] == '\0')// || (ft_strcmp(str[s], "+" ) == 0) || (ft_strcmp(str[s], "-" ) == 0))
+		{	
+//			printf("	first if	");
+			return (0);
+		}
+		i = 0;
+		if (str[s][0]== '+' || str[s][0] == '-')
+			i++;
+		while (str[s][i]) // != '\0')
+		{
+//			printf("	in %d  while %c(%d)	", i, str[s][i], str[s][i]);
+			if (str[s][i] < 48 || str[s][i] > 57)
+				return (0);
+			i++;
+		}	
+		s++;
+	}
+	return (1);
 }
 
 static long	ft_atol(const char *str)
@@ -123,84 +152,115 @@ void add2stack(t_node **stack, long int n)
 		last = findlast(stack);
 		last->next = new;
 	}
+	freeStack(&new);
 }
 
-void buildstack(t_node **a, char **av, int ac)
+void buildstack(t_node **a, char **splitted)
 {
 	long	n;
 	int		i;
 
-	i = 1;
-//	n = 0;
-//	printf("buildstack %d elements\n", (ac - 1));
-	while (i < ac)
+	i = 0;
+	while (splitted[i])
 	{
-		n = ft_atol(av[i]);
-//		printf("building stack step %d : number %i\n", i, (int)n);
+		n = ft_atol(splitted[i]);
 		add2stack(a, n);
 		i++;
 	}
+	//printStack(*a, 'a');
 }
 
+/*void freeStack(t_node **s)
+{
+	t_node	*following;
+
+	while (*s)
+	{
+		following = (*s) -> next;
+		        long            value;
+        free((*s) -> pos);
+        free((*s) -> top);
+        free((*s) -> rot);
+        free((*s) -> rev);
+        free((*s) -> target_rev);
+        free((*s) -> target_rot);
+        free((*s) -> price);
+        free((*s) -> next);
+		free(*s);
+		*s = following;
+	}
+}*/
+
+void	freeStack(t_node **stack)
+{
+	t_node	*tmp;
+
+	if (!stack || !(*stack))
+		return ;
+	while (*stack)
+	{
+		tmp = (*stack)->next;
+		free(*stack);
+		*stack = tmp;
+	}
+	freeStack(&tmp);
+	tmp = NULL;
+	*stack = NULL;
+}
+
+int ft_exit(t_node **a, t_node **b, int err)
+{
+	if (err < 0)
+		printf("Error\n");
+	freeStack(a);
+	freeStack(b);
+	return (0);
+}
 
 int main(int ac, char **av)
 {
 	t_node *a;
 	t_node *b;
+	int i;
+	char	**splitted;
 
+	a = (t_node *)malloc(sizeof(t_node));
+	b = (t_node *)malloc(sizeof(t_node));
 	a = NULL;
 	b = NULL;
-	if (ac == 1)// || (ac == 2 && av[1][0] == NULL))
+	i = 1;
+	if (ac < 3)// || (ac == 2 && av[1][0] == NULL))
 		return(0);
-	//ac--;
-	/*if (ac == 1)
-
-	  av = ft_split(av[1], ' ');
-	  ac = countargs*/
-//	printf("main\n");
-	buildstack(&a, av, ac);
-//	buildstack(&b, av, ac);
-	if (checkstack(&a) == 0)
+	while (i < ac)
+    {
+        splitted = ft_split(av[i], ' ');
+		if (isnumber(splitted) == 0)
+		{
+//			printf("not number!	");
+			freeall(splitted);
+			return(ft_exit(&a, &b, -1));
+		}		
+		buildstack(&a, splitted);
+        i++;
+		freeall(splitted);
+    }
+//	printf("INPUT:\n");
+//	printStack(a, 'a');
+	if (checkstack(&a) < 1)
+		return(ft_exit(&a, &b, checkstack(&a)));
+	if ((stacklen(&a) == 2) )
 	{
-		printf("STACK CHECK KO\n");
-		return (0);
+		//if ((a -> value) > (a -> next -> value))
+		sa(&a);
 	}
-	printStack(a, 'a');
-	printStack(b, 'b');
-	//getmax(&a);
-	//getmin(&a);
-	/*if (!checkstack(&a))
-	{
-		free(&a);
-		return (0);
-	}*/
-
-	if (ac == 3)
-	{
-		//printf("a -> value : %d", a -> value);
-		if ((a -> value) > (a -> next -> value))
-			sa(&a);
-		printStack(a, 'a');
-	}
-	if (ac == 4)
-	{
+	if (stacklen(&a) == 3)
 		sort3(&a);
-		//printf("la posicion de 2 es: %d", getpos(&a, 2));
-	}
-	if (ac > 4)
-	{
+	if (stacklen(&a) > 3)
 		turk_sort(&a, &b);
-	}
-	/*int cs = closestsmall(&a, 5);
-	int cb = closestbig(&a, 5);
-	printf("closestsmall of 5 in a is : %d\n", cs);
-	printf("closestbig of 5 in a is : %d\n", cb);
-*/
-//	sa(&a);
+//	printf("OUTPUT:\n");
 //	printStack(a, 'a');
-//	rr(&a, &b);
-
-//	printStack(a, 'a');
-//	printStack(b, 'b');
-	return(0);
+	return(ft_exit(&a, &b, 1));
+	//freeStack(&a);
+	//freeStack(&b);
+	//return(0);
 }

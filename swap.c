@@ -33,7 +33,8 @@ static	void swap (t_node **stack)
 	p3 = (*stack) -> next;
 	(*stack) -> next = tmp;
 	tmp -> next = p3;
-//	free(tmp);
+	tmp = NULL;
+	free(tmp);
 }
 
 void	sa(t_node **a)

@@ -24,14 +24,20 @@ static void	push(t_node **from, t_node **to)
 	*from = from_head;
 }
 
-void	pa(t_node **a, t_node **b)
+void	pa(t_node **a, t_node **b, int times)
 {
-	ft_putstr("pa\n");
-	push(b, a);
+	while (times--)
+	{
+		ft_putstr("pa\n");
+		push(b, a);
+	}
 }
 
-void	pb(t_node **a, t_node **b)
+void	pb(t_node **a, t_node **b, int times)
 {	
-	ft_putstr("pb\n");
-	push(a, b);
+	while (times--)
+	{
+		ft_putstr("pb\n");
+		push(a, b);
+	}
 }

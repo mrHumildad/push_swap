@@ -30,21 +30,30 @@ void rev_rotate (t_node **stack)
 	(*stack) = old_last;
 }
 
-void	rra(t_node **a)
+void	rra(t_node **a, int times)
 {
-	ft_putstr("rra\n");
-	rev_rotate(a);
+	while (times--)
+	{
+		ft_putstr("rra\n");
+		rev_rotate(a);
+	}
 }
 
-void	rrb(t_node **b)
+void	rrb(t_node **b, int times)
 {
-	ft_putstr("rrb\n");
-	rev_rotate(b);
+	while (times--)
+	{
+		ft_putstr("rrb\n");
+		rev_rotate(b);
+	}
 }
 
-void	rrr(t_node **a, t_node **b)
+void	rrr(t_node **a, t_node **b, int times)
 {
-	ft_putstr("rrr\n");
-	rev_rotate(a);
-	rev_rotate(b);
+	while (times--)
+	{
+		ft_putstr("rrr\n");
+		rev_rotate(a);
+		rev_rotate(b);
+	}
 }

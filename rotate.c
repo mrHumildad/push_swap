@@ -26,24 +26,30 @@ static void	rotate(t_node **stack)
 	*stack = new_head;
 }
 
-void	ra(t_node **a)
+void	ra(t_node **a, int times)
 {
-	ft_putstr("ra\n");
-	rotate(a);
-
+	while (times--)
+	{
+		ft_putstr("ra\n");
+		rotate(a);
+	}
 }
 
-void	rb(t_node **b)
+void	rb(t_node **b, int times)
 {
-	ft_putstr("rb\n");
-	rotate(b);
-
+	while (times--)
+	{
+		ft_putstr("rb\n");
+		rotate(b);
+	}
 }
 
-void	rr(t_node **a, t_node**b)
+void	rr(t_node **a, t_node**b, int times)
 {
-	ft_putstr("rr\n");
-	rotate(a);
-	rotate(b);
-
+	while (times--)
+	{
+		ft_putstr("rr\n");
+		rotate(a);
+		rotate(b);
+	}
 }
