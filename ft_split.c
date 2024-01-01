@@ -55,14 +55,15 @@ static int	wlen(const char *s, char c)
 
 void	freeall(char **res)
 {
-	int	wi;
+	int	i;
 
-	wi = 0;
-	while (res[wi])
+	i = 0;
+	while (res[i])
 	{
-		free(res[wi]);
-		wi++;
+		i++;
 	}
+	while (i >= 0)
+		free(res[i--]);
 	free(res);
 }
 

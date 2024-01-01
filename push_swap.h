@@ -24,8 +24,8 @@
 typedef struct s_node
 {
         long            value;
-        char            *pos;
-        int             top;
+ //       char            *pos;
+  //      int             top;
         int             rot;
         int             rev;
         int             target_rev;

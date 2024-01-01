@@ -58,18 +58,25 @@ int isnumber(char **str)
 	int s;
 
 	s = 0;
+//	printf("%s is number?", *str);
 	while (str[s])
 	{
 		if ((ft_strcmp(str[s], "" ) == 0) || str[s][0] == '\0')// || (ft_strcmp(str[s], "+" ) == 0) || (ft_strcmp(str[s], "-" ) == 0))
+		{	
+//			printf("	first if	");
 			return (0);
+		}
 		i = 0;
 		if (str[s][0]== '+' || str[s][0] == '-')
 			i++;
-		while (str[s][i++] != '\0')
+		while (str[s][i]) // != '\0')
 		{
+//			printf("	in %d  while %c(%d)	", i, str[s][i], str[s][i]);
 			if (str[s][i] < 48 || str[s][i] > 57)
 				return (0);
+			i++;
 		}	
+		s++;
 	}
 	return (1);
 }
@@ -124,7 +131,7 @@ t_node *newnode(long n)
 		return (NULL);
 	new->next = NULL;
 	new->value = n;
-	new -> pos = "";
+	//new -> pos = "";
 	return(new);
 }
 
@@ -145,6 +152,7 @@ void add2stack(t_node **stack, long int n)
 		last = findlast(stack);
 		last->next = new;
 	}
+	//freeStack(&new);
 }
 
 void buildstack(t_node **a, char **splitted)
@@ -195,6 +203,8 @@ void	freeStack(t_node **stack)
 		free(*stack);
 		*stack = tmp;
 	}
+	freeStack(&tmp);
+	tmp = NULL;
 	*stack = NULL;
 }
 
@@ -219,13 +229,18 @@ int main(int ac, char **av)
 	a = NULL;
 	b = NULL;
 	i = 1;
-	if (ac < 3)// || (ac == 2 && av[1][0] == NULL))
-		return(0);
+	printf("ac = %d   ", ac);
+	if (ac < 3)
+	{
+		//freeall(av);
+		return(ft_exit(&a, &b, -1));	
+	}
 	while (i < ac)
     {
         splitted = ft_split(av[i], ' ');
 		if (isnumber(splitted) == 0)
 		{
+//			printf("not number!	");
 			freeall(splitted);
 			return(ft_exit(&a, &b, -1));
 		}		
@@ -233,8 +248,9 @@ int main(int ac, char **av)
         i++;
 		freeall(splitted);
     }
-	printf("INPUT:\n");
-	printStack(a, 'a');
+//	freeall(av);
+//	printf("INPUT:\n");
+//	printStack(a, 'a');
 	if (checkstack(&a) < 1)
 		return(ft_exit(&a, &b, checkstack(&a)));
 	if ((stacklen(&a) == 2) )
@@ -246,10 +262,10 @@ int main(int ac, char **av)
 		sort3(&a);
 	if (stacklen(&a) > 3)
 		turk_sort(&a, &b);
-	printf("OUTPUT:\n");
-	printStack(a, 'a');
+//	printf("OUTPUT:\n");
+//	printStack(a, 'a');
 	return(ft_exit(&a, &b, 1));
 	//freeStack(&a);
 	//freeStack(&b);
-	return(0);
+	//return(0);
 }
