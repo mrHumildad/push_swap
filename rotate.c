@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
+/*
 static void	rotate(t_node **stack)
 {
 	t_node	*new_head;
@@ -19,37 +19,51 @@ static void	rotate(t_node **stack)
 
 	if (!stack || stacklen(stack) < 2)
 		return ;
-	new_head = (*stack) ->next;
+	new_head = (*stack) -> next;
 	old_end = findlast(stack);
 	old_end -> next = (*stack);
 	(*stack) -> next = NULL;
 	*stack = new_head;
 }
+*/
+static void	rotate(t_node **stack)
+{
+	t_node	*tmp;
+	t_node	*tail;
 
+	tmp = *stack;
+	*stack = (*stack)->next;
+	tail = findlast(stack);
+	tmp->next = NULL;
+	tail->next = tmp;
+}
 void	ra(t_node **a, int times)
 {
-	while (times--)
+	while (times > 0)
 	{
 		ft_putstr("ra\n");
 		rotate(a);
+		times--;
 	}
 }
 
 void	rb(t_node **b, int times)
 {
-	while (times--)
+	while (times > 0)
 	{
 		ft_putstr("rb\n");
 		rotate(b);
+		times--;
 	}
 }
 
 void	rr(t_node **a, t_node**b, int times)
 {
-	while (times--)
+	while (times > 0)
 	{
 		ft_putstr("rr\n");
 		rotate(a);
 		rotate(b);
+		times--;
 	}
 }

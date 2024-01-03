@@ -43,12 +43,12 @@ void printStack(t_node *stack, char s)
 		printf("stack %c is sorted!!\n", s);
 	while (stack->next)
 	{
-		printf("node %d[%c] : %li	rot : %d	rev : %d	t_rot ; %d	t_rev :%d	price : %d\n", i, s, stack->value, stack->rot, stack->rev, stack->target_rot, stack->target_rev, stack -> price);
+		printf("node %d[%c] : %li	rot : %d	rev : %d	t_rot ; %d	t_rev :%d	price[%d] : %d\n", i, s, stack->value, stack->rot, stack->rev, stack->target_rot, stack->target_rev, stack->target, stack -> price);
 		i++;
 		stack = stack->next;
 	}
 	//printf("node %d[%c] : %li\n\n", i, s, stack->value);
-		printf("node %d[%c] : %li	rot : %d	rev : %d	t_rot ; %d	t_rev :%d	price : %d\n", i, s, stack->value, stack->rot, stack->rev, stack->target_rot, stack->target_rev, stack -> price);
+		printf("node %d[%c] : %li	rot : %d	rev : %d	t_rot ; %d	t_rev :%d	price[%d] : %d\n", i, s, stack->value, stack->rot, stack->rev, stack->target_rot, stack->target_rev, stack->target, stack -> price);
 
 }
 
@@ -131,7 +131,7 @@ t_node *newnode(long n)
 		return (NULL);
 	new->next = NULL;
 	new->value = n;
-	new -> pos = "";
+	//new -> pos = "";
 	return(new);
 }
 
@@ -152,7 +152,7 @@ void add2stack(t_node **stack, long int n)
 		last = findlast(stack);
 		last->next = new;
 	}
-	freeStack(&new);
+	//freeStack(&new);
 }
 
 void buildstack(t_node **a, char **splitted)
@@ -229,8 +229,12 @@ int main(int ac, char **av)
 	a = NULL;
 	b = NULL;
 	i = 1;
-	if (ac < 3)// || (ac == 2 && av[1][0] == NULL))
-		return(0);
+	//printf("ac = %d   ", ac);
+	if (ac < 3)
+	{
+		//freeall(av);
+		return(ft_exit(&a, &b, -1));	
+	}
 	while (i < ac)
     {
         splitted = ft_split(av[i], ' ');
@@ -244,6 +248,7 @@ int main(int ac, char **av)
         i++;
 		freeall(splitted);
     }
+//	freeall(av);
 //	printf("INPUT:\n");
 //	printStack(a, 'a');
 	if (checkstack(&a) < 1)
@@ -257,8 +262,8 @@ int main(int ac, char **av)
 		sort3(&a);
 	if (stacklen(&a) > 3)
 		turk_sort(&a, &b);
-//	printf("OUTPUT:\n");
-//	printStack(a, 'a');
+	printf("OUTPUT:\n");
+	printStack(a, 'a');
 	return(ft_exit(&a, &b, 1));
 	//freeStack(&a);
 	//freeStack(&b);

@@ -26,18 +26,20 @@ static void	push(t_node **from, t_node **to)
 
 void	pa(t_node **a, t_node **b, int times)
 {
-	while (times--)
+	while (times > 0)
 	{
 		ft_putstr("pa\n");
 		push(b, a);
+		times--;
 	}
 }
 
 void	pb(t_node **a, t_node **b, int times)
 {	
-	while (times--)
+	while (times > 0)
 	{
 		ft_putstr("pb\n");
 		push(a, b);
+		times--;
 	}
 }

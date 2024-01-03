@@ -50,6 +50,7 @@ static void targeting(t_node **from, t_node **to)
         else
             t_value = closestsmall(to, mover -> value);
 //        printf("target of  %li  is %d\n", mover -> value, t_value);
+        mover -> target = t_value;
         target = getnode(to, t_value);
         mover -> target_rot = target -> rot;
         mover -> target_rev = target -> rev;
@@ -60,14 +61,14 @@ static void targeting(t_node **from, t_node **to)
     }
 }
 
-static void analyze_stack(t_node **from, t_node **to)
+/*static void analyze_stack(t_node **from, t_node **to)
 {
     //(void)to;
-    /*t_node *mover;
+    t_node *mover;
     t_node *target;
 
     mover = *from;
-    target = *to;*/
+    target = *to;
     refresh_indexes(from);
   //  printStack(*from, 'a');
     refresh_indexes(to);
@@ -75,7 +76,7 @@ static void analyze_stack(t_node **from, t_node **to)
 
    //targeting(from, to);
    // printStack(*from, 'a');
-}    
+}    */
 
 static t_node *find_cheaper(t_node **a)
 {
@@ -103,17 +104,33 @@ static void migrate_b(t_node **a, t_node **b)
     t_node  *cheaper;
 
     cheaper = find_cheaper(a);
+    printf("CHEAPER is %li moving upon %d at %d price\n", cheaper -> value, cheaper -> target, cheaper -> price);
     if (cheaper -> price == cheaper -> rot + cheaper -> target_rev)
     {
+        printf("1]  %dra + %drrb\n", cheaper -> rot, cheaper -> target_rev);
         ra(a, cheaper -> rot);
         rrb(b, cheaper -> target_rev);
     }
     else if (cheaper -> price == cheaper -> rev + cheaper -> target_rot)
     {
+        printf("2]  %drra + %drb\n", cheaper -> rev, cheaper -> target_rot);
         rra(a, cheaper -> rev);
         rb(b, cheaper -> target_rot);
     }
     else if (cheaper -> price == major(cheaper -> rot, cheaper -> target_rot))
+    {
+        printf("3]  %drr + %dra + %drb\n", minor(cheaper -> rot, cheaper -> target_rot), cheaper -> rot - cheaper -> target_rot, cheaper -> target_rot - cheaper -> rot);
+        rr(a, b, minor(cheaper -> rot, cheaper -> target_rot));
+        ra(a, cheaper -> rot - cheaper -> target_rot);
+        rb(a, cheaper -> target_rot - cheaper -> rot);
+    }
+    else if (cheaper -> price == major(cheaper -> rev, cheaper -> rev))
+    {   printf("4]  %drrr + %drra + %drrb\n", minor(cheaper -> rev, cheaper -> rev), cheaper -> rev - cheaper -> rev, cheaper -> target_rev - cheaper -> rev);
+        rrr(a, b, minor(cheaper -> rev, cheaper -> rev));
+        rra(a, cheaper -> rev - cheaper -> rev);
+        rrb(a, cheaper -> target_rev - cheaper -> rev);
+    }
+    /*else if (cheaper -> price == major(cheaper -> rot, cheaper -> target_rot))
     {
         rr(a, b, cheaper -> price - minor(cheaper -> rot, cheaper -> target_rot));
         ra(a, cheaper -> rot - cheaper -> target_rot);
@@ -124,13 +141,13 @@ static void migrate_b(t_node **a, t_node **b)
         rr(a, b, cheaper -> price - minor(cheaper -> rev, cheaper -> rev));
         ra(a, cheaper -> rev - cheaper -> rev);
         rb(a, cheaper -> target_rev - cheaper -> rev);
-    }
+    }*/
     pb(a, b, 1);
 //    printStack(*a, 'a');
 //    printStack(*b, 'b');
 }
 
-static void populate_b(t_node **a, t_node **b)
+/*static void populate_b(t_node **a, t_node **b)
 {
     pb(a, b, 2);
     
@@ -140,9 +157,9 @@ static void populate_b(t_node **a, t_node **b)
         targeting(a, b);
         migrate_b(a, b); 
     }
-}
+}*/
 
-static void rev_sort(t_node **b)
+/*static void rev_sort(t_node **b)
 {
     int pos;
     int len;
@@ -155,7 +172,7 @@ static void rev_sort(t_node **b)
     else
         rrb(b, (len - pos));
 //    printStack(*b, '!');
-}
+}*/
 
 void back2a(t_node **a, t_node **b)
 {
@@ -167,9 +184,31 @@ void back2a(t_node **a, t_node **b)
 
 void    turk_sort(t_node** a, t_node **b)
 {
-    populate_b(a, b);
-    rev_sort(b);
+    //                                      populate_b(a, b);
+    pb(a, b, 2);
+    while (*a)
+    {
+        //                                  analyze_stack(a, b);
+        refresh_indexes(a);
+        refresh_indexes(b);
+        targeting(a, b);
+        printStack(*a, 'a');
+        printStack(*b, 'b');
+        migrate_b(a, b); 
+    }
+    printf("stack b after migration\n");
+    printStack(*b, 'b');
+    //                                      rev_sort(b);
+    int pos;
+    int len;
+
+    len = stacklen(b);
+    pos = getpos(b, getmax(b));
+ //   printf("max value of b is in pos %d of %d elements", pos, len);
+    if (pos < (len / 2))
+        rb(b, pos);
+    else
+        rrb(b, (len - pos));
+
     back2a(a, b);
- //   printStack(*a, 'a');
- //   printStack(*b, 'b');
 }

@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
+/*
 void rev_rotate (t_node **stack)
 {
 	t_node *old_head;
@@ -28,32 +28,54 @@ void rev_rotate (t_node **stack)
 	new_last -> next = NULL;
 	old_last -> next = old_head;
 	(*stack) = old_last;
+}*/
+t_node	*before_bottom(t_node *stack)
+{
+	while (stack && stack->next->next != NULL)
+		stack = stack->next;
+	return (stack);
+}
+static void	rev_rotate(t_node **stack)
+{
+	t_node	*tmp;
+	t_node	*tail;
+	t_node	*new_tail;
+
+	tail = findlast(stack);
+	new_tail = before_bottom(*stack);
+	tmp = *stack;
+	*stack = tail;
+	(*stack)->next = tmp;
+	new_tail->next = NULL;
 }
 
 void	rra(t_node **a, int times)
 {
-	while (times--)
+	while (times > 0)
 	{
 		ft_putstr("rra\n");
 		rev_rotate(a);
+		times--;
 	}
 }
 
 void	rrb(t_node **b, int times)
 {
-	while (times--)
+	while (times > 0)
 	{
 		ft_putstr("rrb\n");
 		rev_rotate(b);
+		times--;
 	}
 }
 
 void	rrr(t_node **a, t_node **b, int times)
 {
-	while (times--)
+	while (times > 0)
 	{
 		ft_putstr("rrr\n");
 		rev_rotate(a);
 		rev_rotate(b);
+		times--;
 	}
 }

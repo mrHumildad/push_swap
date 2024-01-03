@@ -8,7 +8,7 @@ int closestsmall(t_node **b, int n)
 
     cs = n;
     finder = *b;
-    diff = INT_MAX;
+    diff = LONG_MAX;
     while(finder)
     {
         if (finder -> value < n && (n - (finder -> value)) < diff)

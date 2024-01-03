@@ -24,10 +24,11 @@
 typedef struct s_node
 {
         long            value;
-        char            *pos;
-        int             top;
+ //       char            *pos;
+  //      int             top;
         int             rot;
         int             rev;
+        int             target;
         int             target_rev;
         int             target_rot;
         int             price;
@@ -71,7 +72,6 @@ int    getmax(t_node **a);
 int    getmin(t_node **a);
 int     getpos(t_node **a, long int n);
 int     closestsmall(t_node **b, int n);
-int     closestbig(t_node **b, int n);
 t_node *getnode(t_node **a, long int n);
 int minor (int a, int b);
 int major (int a, int b);
