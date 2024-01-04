@@ -264,6 +264,13 @@ int main(int ac, char **av)
 		turk_sort(&a, &b);
 	printf("OUTPUT:\n");
 	printStack(a, 'a');
+	printf("TEST RA:\n");
+	ra(&a, 1);
+	printStack(a, 'a');
+	printf("TEST RRA:\n");
+	rra(&a, 2);
+	printStack(a, 'a');
+
 	return(ft_exit(&a, &b, 1));
 	//freeStack(&a);
 	//freeStack(&b);

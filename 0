@@ -14,3 +14,4 @@ XXXXX../push_swap "92" "42" "67" "87" "+92" "727" > /dev/null 2> err_check.txt
 ../push_s./push_swap "-21474836499" "456" "6476"wap "1" "4" "66" "88" > err_check.txt
 ../push_swap "1" "4" > err_check.txt
 ../push_swap "1" "4" "7" "8" "10" "100" "10000" > err_check.txt
+./push_swap 1 5 3 4 8 7 10 0

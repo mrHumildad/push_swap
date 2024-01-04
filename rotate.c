@@ -34,8 +34,9 @@ static void	rotate(t_node **stack)
 	tmp = *stack;
 	*stack = (*stack)->next;
 	tail = findlast(stack);
-	tmp->next = NULL;
 	tail->next = tmp;
+	tmp->next = NULL;
+	
 }
 void	ra(t_node **a, int times)
 {
@@ -54,6 +55,7 @@ void	rb(t_node **b, int times)
 		ft_putstr("rb\n");
 		rotate(b);
 		times--;
+		//printStack(*b, 'b');
 	}
 }
 
