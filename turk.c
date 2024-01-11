@@ -104,31 +104,32 @@ static void migrate_b(t_node **a, t_node **b)
     t_node  *cheaper;
 
     cheaper = find_cheaper(a);
-    printf("CHEAPER is %li moving upon %d at %d price\n", cheaper -> value, cheaper -> target, cheaper -> price);
+    //printf("CHEAPER is %li moving upon %d at %d price\n", cheaper -> value, cheaper -> target, cheaper -> price);
     if (cheaper -> price == cheaper -> rot + cheaper -> target_rev)
     {
-        printf("1]  %dra + %drrb\n", cheaper -> rot, cheaper -> target_rev);
+       // printf("1]  %dra + %drrb\n", cheaper -> rot, cheaper -> target_rev);
         ra(a, cheaper -> rot);
         rrb(b, cheaper -> target_rev);
     }
     else if (cheaper -> price == cheaper -> rev + cheaper -> target_rot)
     {
-        printf("2]  %drra + %drb\n", cheaper -> rev, cheaper -> target_rot);
+        //printf("2]  %drra + %drb\n", cheaper -> rev, cheaper -> target_rot);
         rra(a, cheaper -> rev);
         rb(b, cheaper -> target_rot);
     }
     else if (cheaper -> price == major(cheaper -> rot, cheaper -> target_rot))
     {
-        printf("3]  %drr + %dra + %drb\n", minor(cheaper -> rot, cheaper -> target_rot), cheaper -> rot - cheaper -> target_rot, cheaper -> target_rot - cheaper -> rot);
+        //printf("3]  %drr + %dra + %drb\n", minor(cheaper -> rot, cheaper -> target_rot), cheaper -> rot - cheaper -> target_rot, cheaper -> target_rot - cheaper -> rot);
         rr(a, b, minor(cheaper -> rot, cheaper -> target_rot));
         ra(a, cheaper -> rot - cheaper -> target_rot);
-        rb(a, cheaper -> target_rot - cheaper -> rot);
+        rb(b, cheaper -> target_rot - cheaper -> rot);
     }
     else if (cheaper -> price == major(cheaper -> rev, cheaper -> rev))
-    {   printf("4]  %drrr + %drra + %drrb\n", minor(cheaper -> rev, cheaper -> rev), cheaper -> rev - cheaper -> rev, cheaper -> target_rev - cheaper -> rev);
+    {   
+        //printf("4]  %drrr + %drra + %drrb\n", minor(cheaper -> rev, cheaper -> rev), cheaper -> rev - cheaper -> rev, cheaper -> target_rev - cheaper -> rev);
         rrr(a, b, minor(cheaper -> rev, cheaper -> rev));
         rra(a, cheaper -> rev - cheaper -> rev);
-        rrb(a, cheaper -> target_rev - cheaper -> rev);
+        rrb(b, cheaper -> target_rev - cheaper -> rev);
     }
     /*else if (cheaper -> price == major(cheaper -> rot, cheaper -> target_rot))
     {
@@ -192,12 +193,12 @@ void    turk_sort(t_node** a, t_node **b)
         refresh_indexes(a);
         refresh_indexes(b);
         targeting(a, b);
-        printStack(*a, 'a');
-        printStack(*b, 'b');
+        //printStack(*a, 'a');
+        //printStack(*b, 'b');
         migrate_b(a, b); 
     }
-    printf("stack b after migration\n");
-    printStack(*b, 'b');
+//    printf("stack b after migration\n");
+//    printStack(*b, 'b');
     //                                      rev_sort(b);
     int pos;
     int len;

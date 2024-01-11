@@ -55,7 +55,6 @@ void	rb(t_node **b, int times)
 		ft_putstr("rb\n");
 		rotate(b);
 		times--;
-		//printStack(*b, 'b');
 	}
 }
 
