@@ -20,30 +20,30 @@ int closestsmall(t_node **b, int n)
     }
     return (cs);
 }
-/*int closestbig(t_node **b, int n)
+int closestbig(t_node **a, int n)
 {
     int cb;
     long diff;
     t_node  *finder;
 
     cb = n;
-    finder = *b;
-    diff = INT_MAX ; 2 + 1;
+    finder = *a;
+    diff = LONG_MAX;
     while(finder)
     {
-        printf("closestbig in the while, %li\n", finder -> value);
+       // printf("closestbig in the while, %li\n", finder -> value);
         if (finder -> value > n && ((finder -> value) - n) < diff)
         {
-            printf("closestbig in the if\n");
+         //   printf("closestbig in the if\n");
             cb = finder -> value;
-            printf("cb = %d\n", cb);
+         //   printf("cb = %d\n", cb);
             diff = (finder -> value) - n;
-            printf("diff = %li\n", diff);
+           // printf("diff = %li\n", diff);
         }
         finder = finder -> next;
     }
     return (cb);
-}*/
+}
 
 int getpos(t_node **a, long int n)
 {

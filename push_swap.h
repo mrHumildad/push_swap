@@ -72,6 +72,7 @@ int    getmax(t_node **a);
 int    getmin(t_node **a);
 int     getpos(t_node **a, long int n);
 int     closestsmall(t_node **b, int n);
+int closestbig(t_node **a, int n);
 t_node *getnode(t_node **a, long int n);
 int minor (int a, int b);
 int major (int a, int b);
